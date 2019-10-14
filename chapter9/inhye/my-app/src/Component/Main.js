@@ -4,15 +4,17 @@ class Main extends Component {
 	constructor (props) {
     super(props)
     this.state = {
-      menuList: [
-        'Home',
-        'About',
-        'Services',
-        'Portfolio',
-        'Contact us',
-      ]
+      menuList: []
     }
-	}
+  }
+  
+  componentDidMount() {
+    fetch('./menuList.json')
+    .then((response) => response.json())
+    .then(json => this.setState({menuList: json}))
+    .catch(err => console.log(err));
+  }
+
 	render() {
 		return (
       this.state.menuList.map((menu, index) => {
