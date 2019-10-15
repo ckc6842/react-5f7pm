@@ -1,0 +1,18 @@
+.Menu {
+    text-align: left;
+}
+
+.Menu-main {
+    background-color:white;
+    padding: 5px;
+    justify-content: left;
+    color: darkolivegreen;
+}
+
+.Menu-link {
+    color: whitesmoke;
+}
+
+.Menu a:visited {
+    color: darkolivegreen;
+}
