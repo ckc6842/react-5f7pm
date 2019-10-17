@@ -1,0 +1,9 @@
+.tooltip-box {
+  position: fixed;
+  margin-top: 30px;
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  color: blue;
+  background-color: white;
+}
