@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Tooltip from './Tooltip'
+import PropTypes from 'prop-types'
 class Main extends Component {
 	constructor (props) {
     super(props)
@@ -11,10 +12,17 @@ class Main extends Component {
 
 	render() {
 		return (
-      // tooltip component
       <div>
-        <Tooltip text="your reading now">
-          React Quickly !!
+        <Tooltip text="click click"
+                 allowToggleWithClick={true}
+                 allowToggleWithMouseInteraction={false}
+                  >
+          Click
+        </Tooltip>
+        <Tooltip text="mouse mouse"
+                 allowToggleWithClick={false}
+                 allowToggleWithMouseInteraction={true}>
+          Mouse
         </Tooltip>
       </div>
 		)
@@ -22,3 +30,16 @@ class Main extends Component {
 }
 
 export default Main
+
+Tooltip.propTypes = {
+  allowToggleWithClick: PropTypes.bool,
+  allowToggleWithMouseInteraction: PropTypes.bool,
+  positionWhereShowText: PropTypes.oneOf(['bottom', 'top']),
+
+}
+
+Tooltip.defaultProps = {
+  allowToggleWithClick: false,
+  allowToggleWithMouseInteraction: true,
+  positionWhereShowText: 'bottom',
+}
