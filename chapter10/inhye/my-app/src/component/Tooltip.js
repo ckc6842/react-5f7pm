@@ -9,18 +9,18 @@ class Tooltip extends Component {
     }
     this.toggle = this.toggle.bind(this)
     this.handleClick = this.handleClick.bind(this)
-    this.handleMouseInteraction = this.handleMouseInteraction.bind(this)
+    this.handleMouseOver = this.handleMouseOver.bind(this)
   }
 
   handleClick() {
-    if (!this.props.allowToggleWithClick) {
+    if (!this.props.isClickToggle) {
       return false
     }
     this.toggle()
   }
 
-  handleMouseInteraction() {
-    if (!this.props.allowToggleWithMouseInteraction) {
+  handleMouseOver() {
+    if (!this.props.isMouseToggle) {
       return false
     }
     this.toggle()
@@ -49,8 +49,8 @@ class Tooltip extends Component {
       <div style={{display: 'inline'}}>
         <span style={{color: 'blue', cursor: 'pointer'}}
               onClick={ this.handleClick }
-              onMouseEnter={ this.handleMouseInteraction }
-              onMouseOut={ this.handleMouseInteraction } >
+              onMouseEnter={ this.handleMouseOver }
+              onMouseOut={ this.handleMouseOver } >
           { this.props.children }
         </span>
         <div className="tooltip-bottom"
