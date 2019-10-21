@@ -24,22 +24,27 @@ class Tooltip extends Component {
       showTooltip: false,
       tooltipStyle: {},
     }
+
     this.toggle = this.toggle.bind(this)
+    this.onClickTooltip = this.onClickTooltip.bind(this)
+    this.onHoverTooltip = this.onHoverTooltip.bind(this)
     this.makeTooltipStyle = this.makeTooltipStyle.bind(this)
+    
   }
   
   render () {
-    const { text, children, click, hover } = this.props
+    const { text, children, click, hover, direction } = this.props
     const { showTooltip, tooltipStyle } = this.state
     console.log(click, hover)
     return (
       <>
-        <span onClick={ click ? this.toggle : undefined }
-              onMouseEnter={ hover ? this.toggle : undefined }
-              onMouseOut={ hover ? this.toggle : undefined }>
+        <span onClick={ this.onClickTooltip }
+              onMouseEnter={ this.onHoverTooltip }
+              onMouseOut={ this.onHoverTooltip }>
           <strong>{ children }</strong>
         </span>
-        <div className='tooltip-box'
+        {/* className() 쓰면 더 깔끔할 것 같습니다. */}
+        <div className={`tooltip-box tooltip-box-${ direction.toLowerCase() }`}
              hidden={ !showTooltip }
              style={ tooltipStyle }
              role='tooltip'>
@@ -54,7 +59,18 @@ class Tooltip extends Component {
       showTooltip: !state.showTooltip,
       tooltipStyle: this.makeTooltipStyle(!state.showTooltip),
     }))
+  }
 
+  onClickTooltip () {
+    if (this.props.click) {
+      this.toggle()
+    }
+  }
+
+  onHoverTooltip () {
+    if (this.props.hover) {
+      this.toggle()
+    }
   }
 
   makeTooltipStyle () {
@@ -63,8 +79,6 @@ class Tooltip extends Component {
     return {
       top,
       left,
-      marginTop: direction === DIRECTION.UP ? -40 : 30,
-      marginRight: 10,
     }
   }
 }
