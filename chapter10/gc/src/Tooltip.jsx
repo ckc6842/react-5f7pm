@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import CONST from './CONST'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -9,7 +10,7 @@ export default class App extends React.Component {
     }
   }
 
-  toggle = (e) => {
+  toggle () {
     const { offsetTop, offsetLeft } = ReactDOM.findDOMNode(this)
     this.setState({
       opacity: !this.state.opacity,
@@ -18,18 +19,26 @@ export default class App extends React.Component {
     })
   }
 
+  handleOver = (e) => {
+    if (this.props.method !== CONST.METHOD.OVER) return
+    this.toggle()
+  }
+
+  handleClick = (e) => {
+    if (this.props.method !== CONST.METHOD.CLICK) return
+    this.toggle()
+  }
+
   getStyle = (e) => {
     return {
       zIndex: (this.state.opacity) ? 1000 : -1000,
-      // opacity: 1,
       opacity: +this.state.opacity,
-      top: this.props.position === 'bottom' ? (this.state.top || 0) + 20 : 10,
+      top: this.props.position === CONST.POSITION.BOTTOM ? (this.state.top || 0) + 20 : 10,
       left: (this.state.left || 0) + 30
     }
   }
 
   getTooltipClass = (e) => {
-    console.log('tooltip bs-tooltip-' + this.props.position)
     return 'tooltip bs-tooltip-' + this.props.position
   }
 
@@ -37,8 +46,9 @@ export default class App extends React.Component {
     return (
       <div style={{display: 'inline'}}>
         <span style={{color: 'blue'}}
-          onMouseEnter={this.toggle}
-          onMouseLeave={this.toggle}>
+          onMouseEnter={this.handleOver}
+          onMouseLeave={this.handleOver}
+          onClick={this.handleClick}>
           {this.props.children}
         </span>
         <div className={this.getTooltipClass()}

@@ -1,13 +1,14 @@
 import React from 'react'
 import Tooltip from './Tooltip'
 import TooltipOptions from './TooltipOptions'
+import CONST from './CONST'
 
 export default class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      method: 'over',
-      position: 'bottom'
+      method: CONST.METHOD.OVER,
+      position: CONST.POSITION.BOTTOM
     }
   }
 
@@ -26,9 +27,9 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-        <TooltipOptions options={['over', 'click']}
+        <TooltipOptions options={[CONST.METHOD.OVER, CONST.METHOD.CLICK]}
           handleOption={this.updateMethod}/>
-        <TooltipOptions options={['bottom', 'top']}
+        <TooltipOptions options={[CONST.POSITION.BOTTOM, CONST.POSITION.TOP]}
           handleOption={this.updatePosition} />
         <div>
           <Tooltip method={this.state.method}
@@ -36,7 +37,6 @@ export default class App extends React.Component {
             text="The book you're reading now">React Quickly</Tooltip>
           <span> was published in 2017. It's awesome!</span>
         </div>
-        <div>{this.state.method} / {this.state.position}</div>
       </div>
     )
   }

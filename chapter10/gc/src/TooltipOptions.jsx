@@ -6,7 +6,6 @@ export default class TooltipOptions extends React.Component {
   }
 
   render () {
-    console.log(this.props.handleOption)
     return (
       <select onChange={this.props.handleOption}>
         {this.props.options.map(option => {
