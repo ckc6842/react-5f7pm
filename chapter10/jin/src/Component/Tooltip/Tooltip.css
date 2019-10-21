@@ -1,0 +1,14 @@
+.Tooltip_container {
+    display: inline;
+}
+
+.Tooltip_word {
+    color: blue;
+}
+
+.Tooltip_text {
+    padding: 5px;
+    border: 1px solid #333333;
+    background-color: #999999;
+    color: #ffffff;
+}

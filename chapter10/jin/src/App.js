@@ -1,8 +1,6 @@
 import React from 'react';
 import Tooltip from './Component/Tooltip/Tooltip';
-
-import logo from './logo.svg';
-// import './App.css';
+import './Component/Tooltip/Tooltip.css'
 
 function App() {
   return (

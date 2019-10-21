@@ -1,5 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import './Tooltip.css'
+
 
 class Tooltip extends React.Component {
 
@@ -32,7 +35,7 @@ class Tooltip extends React.Component {
     }
 
     render () { 
-        const marginTop = (this.state.vAlign == 'bottom') ? 30 : -30
+        const marginTop = (this.state.vAlign === 'bottom') ? 30 : -30
         const style = {
             zIndex: (this.state.opacity) ? 1000: -1000,
             opacity: +this.state.opacity,
@@ -42,8 +45,8 @@ class Tooltip extends React.Component {
         }
 
         return(
-            <div style={{display: 'inline'}}>
-                <span style={{color: 'blue'}}
+            <div className="Tooltip_container">
+                <span className="Tooltip_word"
                     onMouseEnter={(this.props.supportMouseEvent) ? this.toggle : null}
                     onMouseOut={(this.props.supportMouseEvent) ? this.toggle : null}
                     onClick={(this.props.supportClickEvent) ? this.toggle : null}>
@@ -51,7 +54,7 @@ class Tooltip extends React.Component {
                 </span>
                 <div style={style}
                     role="tooltip">
-                    <div style={{padding: 5, border: '1px solid #333333', backgroundColor: '#999999', color: '#ffffff'}}>
+                    <div className="Tooltip_text">
                     {this.props.text}
                     </div>
                 </div>
@@ -68,8 +71,8 @@ Tooltip.defaultProps = {
     vAlign: 'bottom'
 }
 
-Tooltip.propType = {
-    // tipText: React.PropType.string
+Tooltip.propTypes = {
+    tipText: PropTypes.string
 }
 
 export default Tooltip;
