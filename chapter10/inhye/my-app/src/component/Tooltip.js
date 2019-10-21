@@ -39,12 +39,14 @@ class Tooltip extends Component {
   }
 
 	render() {
+    const top = this.state.top || 0
     const style = {
       zIndex: (this.state.opacity) ? 1000 : -1000,
       opacity: +this.state.opacity,
-      top: (this.state.top || 0) +20,
+      top: top + (this.props.tooltipPosition === 'bottom' ? +20 : -20),
       left: (this.state.left || 0) -30,
     }
+
 		return (
       <div style={{display: 'inline'}}>
         <span style={{color: 'blue', cursor: 'pointer'}}
@@ -53,7 +55,7 @@ class Tooltip extends Component {
               onMouseOut={ this.handleMouseOver } >
           { this.props.children }
         </span>
-        <div className="tooltip-bottom"
+        <div className={`tooltip ${this.props.tooltipPosition}`} 
             style={style}
             role="tooltip">
               <div className="arrow"></div>

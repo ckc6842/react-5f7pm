@@ -21,15 +21,22 @@ class Main extends Component {
 		return (
       <div>
         <Tooltip text="click click"
-                 isClickToggle={true}
-                 isMouseToggle={false}
-                  >
+                 isClickToggle={true}>
           Click
         </Tooltip>
         <Tooltip text="mouse mouse"
-                 isClickToggle={false}
                  isMouseToggle={true}>
           Mouse
+        </Tooltip>
+        <Tooltip text="mouse mouse"
+                 isMouseToggle={true}
+                 tooltipPosition='top'>
+          Up
+        </Tooltip>
+        <Tooltip text="mouse mouse"
+                 isMouseToggle={true}
+                 tooltipPosition='bottom'>
+          Down
         </Tooltip>
       </div>
 		)
@@ -40,6 +47,6 @@ export default Main
 
 Tooltip.defaultProps = {
   isClickToggle: false,
-  isMouseToggle: true,
+  isMouseToggle: false,
   tooltipPosition: 'bottom',
 }
