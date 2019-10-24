@@ -9,11 +9,16 @@ class Button extends Component {
   }
 
   startTime (e) {
+    return this.props.startTimer(this.props.time)
   }
 
 	render() {
 		return (
-      <div></div>
+      <button type="button"
+              className="btn-default btn"
+              onClick={this.startTime}>
+        {this.props.time} seconds
+      </button>
 		)
 	}
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Button from './Button'
+import Timer from './Timer'
 
 class TimerWrapper extends Component {
 	constructor (props) {
@@ -31,6 +32,8 @@ class TimerWrapper extends Component {
           <Button time="10" startTimer={this.startTimer} />
           <Button time="15" startTimer={this.startTimer} />
         </div>
+        <Timer timeLeft={this.state.timeLeft} />
+        <audio id="end-of-time" src="/flute_c_long_01.wav" preload="auto"></audio>
       </div>
 		)
 	}
