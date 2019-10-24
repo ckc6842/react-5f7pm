@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from './Button'
 import Timer from './Timer'
-
+import ChangeButton from './ChangeButton'
 class TimerWrapper extends Component {
 	constructor (props) {
     super(props)
@@ -27,6 +27,10 @@ class TimerWrapper extends Component {
 		return (
       <div className="row-fluid">
         <h2>Timer~~</h2>
+        <div>
+          {/* TODO: 최초 로딩에 hide */}
+          <ChangeButton timeLeft={this.state.timeLeft}/>
+        </div>
         <div className="btn-group" role="group">
           <Button time="5" startTimer={this.startTimer} />
           <Button time="10" startTimer={this.startTimer} />
