@@ -35,7 +35,7 @@ class Tooltip extends Component {
   render () {
     const { text, children, click, hover, direction } = this.props
     const { showTooltip, tooltipStyle } = this.state
-    console.log(click, hover)
+
     return (
       <>
         <span onClick={ this.onClickTooltip }
