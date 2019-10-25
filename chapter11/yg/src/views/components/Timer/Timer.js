@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TimerButton from './TimerButton'
 import TimerLabel from './TimerLabel'
+import TimerSlider from './TimerSlider'
 import TimerSound from './TimerSound'
 
 // TimerWrapper
@@ -8,18 +9,22 @@ class Timer extends Component {
   constructor (props) {
     super(props)
     this.setTimer = this.setTimer.bind(this)
-    this.playAlarm = this.playAlarm.bind(this)
+    this.onChangeSlider = this.onChangeSlider.bind(this)
     this.clearTimer = this.clearTimer.bind(this)
+    this.toggleTimer = this.toggleTimer.bind(this)
+    this.playAlarm = this.playAlarm.bind(this)
 
     this.state = {
       time: 0,
+      maxTime: 0,
       timer: null,
+      pause: false,
       alarm: false,
     }
   }
 
   render () {
-    const { time, alarm } = this.state
+    const { time, timer, maxTime, pause, alarm } = this.state
     return (
       <>
         <h1>Timer</h1>
@@ -29,8 +34,15 @@ class Timer extends Component {
           <TimerButton onClick={ () => this.setTimer(10 * 60) }>10 min</TimerButton>
           <TimerButton onClick={ () => this.setTimer(15 * 60) }>15 min</TimerButton>
         </div>
+        <div>
+          <TimerButton onClick={ this.toggleTimer } disabled={ timer === null }>
+            { pause ? 'Play' : 'Pause' }
+          </TimerButton>
+          <TimerButton onClick={ this.clearTimer } disabled={ timer === null }>Stop</TimerButton>
+        </div>
         <TimerLabel time={ time } />
         <TimerSound turnOn={ alarm } />
+        <TimerSlider onChange={ this.onChangeSlider } max={ maxTime } value={ time } disabled={ timer === null } />
       </>
     )
   }
@@ -43,14 +55,34 @@ class Timer extends Component {
         this.clearTimer()
         return
       }
-      this.setState((state) => ({ time: state.time - 1 }))
+      if (!this.state.pause) {
+        this.setState((state) => ({ time: state.time - 1 }))
+      }
     }, 1000)
-    this.setState({ time, timer })
+
+    this.setState({
+      time,
+      timer,
+      maxTime: time,
+    })
+  }
+
+  onChangeSlider (e) {
+    this.setState({ time: e.target.value })
   }
 
   clearTimer () {
     clearInterval(this.state.timer)
-    this.setState({ time: 0, timer: null })
+    this.setState({
+      time: 0,
+      timer: null,
+      maxTime: 0,
+      pause: false,
+    })
+  }
+
+  toggleTimer () {
+    this.setState((state) => ({ pause: !state.pause }))
   }
 
   playAlarm () {
