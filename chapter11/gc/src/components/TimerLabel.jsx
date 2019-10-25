@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Timer = (props) => {
-  if (props.timeLeft === 0) {
-    document.getElementById('end-of-time').play()
-  }
-
+const TimerLabel = (props) => {
   if (props.timeLeft === null || props.timeLeft === 0) return <div />
 
   return (
@@ -13,8 +9,8 @@ const Timer = (props) => {
   )
 }
 
-Timer.propTypes = {
+TimerLabel.propTypes = {
   timeLeft: PropTypes.number
 }
 
-export default Timer
+export default TimerLabel
