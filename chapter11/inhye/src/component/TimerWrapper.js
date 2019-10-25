@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Button from './Button'
 import Timer from './Timer'
-import ChangeButton from './ChangeButton'
+import PropTypes from 'prop-types'
+
 class TimerWrapper extends Component {
 	constructor (props) {
     super(props)
@@ -26,7 +27,7 @@ class TimerWrapper extends Component {
 
   renderChangeButton () {
     if (this.state.timeLeft === null) return
-    return <ChangeButton timeLeft={this.state.timeLeft} pauseTime={this.pauseTime} startTimer={this.startTimer}/>
+    return <Button defaultButton={false} timeLeft={this.state.timeLeft} pauseTime={this.pauseTime} startTimer={this.startTimer} />
   }
   pauseTime () {
     clearInterval(this.state.timer)
@@ -51,3 +52,10 @@ class TimerWrapper extends Component {
 }
 
 export default TimerWrapper
+Button.propTypes = {
+  defaultButton: PropTypes.bool,
+}
+
+Button.defaultProps = {
+  defaultButton: true,
+}
