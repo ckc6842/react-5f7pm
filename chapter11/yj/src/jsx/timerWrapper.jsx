@@ -1,13 +1,14 @@
 import React from 'react';
 import Timer from './timer.jsx';
 import Button from './button.jsx';
+import TimeSlider from './slider.jsx';
 
 class PauseButton extends React.Component {
-    pauseTimer(event) {
+    pauseTimer (event) {
         return this.props.pauseTimer()
     }
 
-    render() {
+    render () {
         return <button type="button" onClick={this.pauseTimer.bind(this)}>
             Pause
         </button>
@@ -15,11 +16,11 @@ class PauseButton extends React.Component {
 }
 
 class CancelButton extends React.Component {
-    cancelTimer(event) {
+    cancelTimer (event) {
         return this.props.cancelTimer()
     }
 
-    render() {
+    render () {
         return <button type="button" onClick={this.cancelTimer.bind(this)}>
             Cancel
         </button>
@@ -27,11 +28,11 @@ class CancelButton extends React.Component {
 }
 
 class ResetButton extends React.Component {
-    resetTimer(event) {
+    resetTimer (event) {
         return this.props.resetTimer()
     }
 
-    render() {
+    render () {
         return <button type="button" onClick={this.resetTimer.bind(this)}>
             Reset
         </button>
@@ -39,16 +40,17 @@ class ResetButton extends React.Component {
 }
 
 class TimerWrapper extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props)
         this.state = {timeLeft : null, timer : null, isPaused : false, timerDuration : null}
         this.startTimer = this.startTimer.bind(this)
         this.toggleTimerPaused = this.toggleTimerPaused.bind(this)
         this.cancelTimer = this.cancelTimer.bind(this)
         this.resetTimer = this.resetTimer.bind(this)
+        this.onTimerRingRing = this.onTimerRingRing.bind(this)
     }
 
-    startTimer(timeLeft) {
+    startTimer (timeLeft) {
         clearInterval(this.state.timer)
         let timer = setInterval(()=>{
             console.log('2: Inside of setInterval')
@@ -62,33 +64,38 @@ class TimerWrapper extends React.Component {
         return this.setState({timeLeft : timeLeft, timer : timer, timerDuration : timeLeft})
     }
 
-    toggleTimerPaused() {
+    toggleTimerPaused () {
         this.setState({isPaused : !this.state.isPaused})
     }
 
-    cancelTimer() {
+    cancelTimer () {
         this.setState({timeLeft : 0})
         clearInterval(this.state.timer)
     }
 
-    resetTimer() {
+    resetTimer () {
         this.setState({timeLeft : this.state.timerDuration})
     }
 
-    render() {
+    onTimerRingRing () {
+        document.getElementById('end-of-time').play()
+    }
+
+    render () {
         return (
             <div className="row-fluid">
                 <h2>Timer</h2>
                 <div className="btn-group" role="group">
-                    <Button time="5" startTimer={this.startTimer}/>
-                    <Button time="10" startTimer={this.startTimer}/>
-                    <Button time="15" startTimer={this.startTimer}/>
+                    <Button time="5"  unit="" startTimer={this.startTimer}/>
+                    <Button time="10" unit="" startTimer={this.startTimer}/>
+                    <Button time="15" unit="" startTimer={this.startTimer}/>
                     <PauseButton pauseTimer={this.toggleTimerPaused}/>
                     <CancelButton cancelTimer={this.cancelTimer}/>
                     <ResetButton resetTimer={this.resetTimer}/>
                 </div>
-                <Timer timeLeft={this.state.timeLeft}/>
+                <Timer timeLeft={this.state.timeLeft} onTimeRing={this.onTimerRingRing}/>
                 <audio id="end-of-time" src="/yeah.wav" preload="auto"></audio>
+                <TimeSlider timeLeft={this.state.timeLeft} timerDuration={this.state.timerDuration}/>
             </div>
         )
     }

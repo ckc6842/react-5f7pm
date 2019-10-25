@@ -4,15 +4,14 @@ class ChangeButton extends Component {
 	constructor (props) {
     super(props)
     this.state = {
-      status: '',
+      status: 'Pause',
+      timeLeft: null,
     }
     this.onChangeStatus = this.onChangeStatus.bind(this)
     this.onClickChange = this.onClickChange.bind(this)
   }
 
   onChangeStatus () {
-    //    시작 -> 일시중지
-    //    일시중지 -> 재시작
     if (this.props.timeLeft > 0) {
       this.setState({
         status: 'Pause',
@@ -22,9 +21,15 @@ class ChangeButton extends Component {
   }
 
   onClickChange () {
-    return (e) => {
-      //  TODO: pause 이면 멈춤
-      //  TODO: restart이면 다시 시작
+    if (this.props.timeLeft > 0) {
+      this.setState({
+        status: 'Restart',
+        timeLeft: this.props.timeLeft,
+      })
+      this.props.pauseTime()
+    }
+    if (this.state.status === 'Restart') {
+      this.props.startTimer(this.state.timeLeft)
     }
   }
 

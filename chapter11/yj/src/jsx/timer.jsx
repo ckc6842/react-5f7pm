@@ -16,7 +16,7 @@ import React from 'react';
 // Without State Component
 const Timer = (props) => {
     if(props.timeLeft === 0) {
-            document.getElementById('end-of-time').play()
+            props.onTimeRing()
     }
 
     if (props.timeLeft === null || props.timeLeft === 0)
