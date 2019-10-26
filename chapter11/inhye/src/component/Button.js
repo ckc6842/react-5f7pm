@@ -7,16 +7,38 @@ class Button extends Component {
       status: 'Pause',
       timeLeft: null,
     }
-    this.startTime = this.startTime.bind(this)
-    this.onChangeStatus = this.onChangeStatus.bind(this)
-    this.onClickChange = this.onClickChange.bind(this)
+    this.stopTimer = this.stopTimer.bind(this)
+    this.restartTimer = this.restartTimer.bind(this)
+    this.onClickButton = this.onClickButton.bind(this)
+    this.renderText = this.renderText.bind(this)
   }
 
-  startTime () {
-    return this.props.startTimer(this.props.time)
+  onClickButton () {
+    if (this.props.buttonType === 'timer') {
+      return this.props.startTimer(this.props.time)
+    }
+    if (this.props.buttonType === 'status') {
+      return this.restartTimer()
+    }
+    if (this.props.buttonType === 'cancel') {
+      return this.props.cancelTimer()
+    }
   }
 
-  onChangeStatus () {
+  restartTimer () {
+    if (this.props.timeLeft > 0) {
+      this.setState({
+        status: 'Restart',
+        timeLeft: this.props.timeLeft,
+      })
+      this.props.pauseTimer()
+    }
+    if (this.state.status === 'Restart') {
+      this.props.startTimer(this.state.timeLeft)
+    }
+  }
+
+  stopTimer () {
     if (this.props.timeLeft > 0) {
       this.setState({
         status: 'Pause',
@@ -25,22 +47,20 @@ class Button extends Component {
     return this.props.timeLeft
   }
 
-  onClickChange () {
-    if (this.props.timeLeft > 0) {
-      this.setState({
-        status: 'Restart',
-        timeLeft: this.props.timeLeft,
-      })
-      this.props.pauseTime()
+  renderText () {
+    if (this.props.buttonType === 'timer') {
+      return `${this.props.time} seconds`
     }
-    if (this.state.status === 'Restart') {
-      this.props.startTimer(this.state.timeLeft)
+    if (this.props.buttonType === 'status') {
+      return this.state.status
+    }
+    if (this.props.buttonType === 'cancel') {
+      return 'cancel'
     }
   }
-
   componentDidUpdate (prevProp) {
     if (prevProp.timeLeft !== this.props.timeLeft) {
-      this.onChangeStatus()
+      this.stopTimer()
     }
   }
 
@@ -48,10 +68,8 @@ class Button extends Component {
 		return (
       <button type="button"
               className="btn-default btn"
-              // just button이면 this.startTime
-              // change button이면 this.onClickChange
-              onClick={this.props.defaultButton ? this.startTime : this.onClickChange}>
-        {this.props.defaultButton ? `${this.props.time} seconds` : this.state.status}
+              onClick={this.onClickButton}>
+        {this.renderText()}
       </button>
 		)
 	}

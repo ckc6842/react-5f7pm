@@ -11,11 +11,26 @@ class TimerWrapper extends Component {
       timer: null,
     }
     this.startTimer = this.startTimer.bind(this)
-    this.pauseTime = this.pauseTime.bind(this)
+    this.pauseTimer = this.pauseTimer.bind(this)
+    this.cancelTimer = this.cancelTimer.bind(this)
+    this.renderChangeButton = this.renderChangeButton.bind(this)
+  }
+
+  renderChangeButton () {
+    if (this.state.timeLeft === null) return
+    return (
+      <div>
+        <Button buttonType="status"
+                timeLeft={this.state.timeLeft}
+                pauseTimer={this.pauseTimer}
+                startTimer={this.startTimer} />
+      <Button buttonType="cancel" cancelTimer={this.cancelTimer}></Button>
+      </div>
+    )
   }
 
   startTimer (timeLeft) {
-    clearInterval(this.state.timer)
+    this.pauseTimer()
     let timer = setInterval(() => {
       var timeLeft = this.state.timeLeft - 1
       //  남은 시간이 0일때 clear
@@ -25,24 +40,27 @@ class TimerWrapper extends Component {
     return this.setState({ timeLeft: timeLeft, timer: timer })
   }
 
-  renderChangeButton () {
-    if (this.state.timeLeft === null) return
-    return <Button defaultButton={false} timeLeft={this.state.timeLeft} pauseTime={this.pauseTime} startTimer={this.startTimer} />
-  }
-  pauseTime () {
+  pauseTimer () {
     clearInterval(this.state.timer)
   }
+
+  cancelTimer () {
+    this.pauseTimer()
+    this.setState({
+      timer: null,
+      timeLeft: null,
+    })
+  }
+
 	render() {
 		return (
       <div className="row-fluid">
         <h2>Timer~~</h2>
-        <div>
-          {this.renderChangeButton()}
-        </div>
+        {this.renderChangeButton()}
         <div className="btn-group" role="group">
-          <Button time="5" startTimer={this.startTimer} />
-          <Button time="10" startTimer={this.startTimer} />
-          <Button time="15" startTimer={this.startTimer} />
+          <Button buttonType="timer" time="5" startTimer={this.startTimer} />
+          <Button buttonType="timer" time="10" startTimer={this.startTimer} />
+          <Button buttonType="timer" time="15" startTimer={this.startTimer} />
         </div>
         <Timer timeLeft={this.state.timeLeft} />
         <audio id="end-of-time" src="/flute_c_long_01.wav" preload="auto"></audio>
@@ -53,9 +71,9 @@ class TimerWrapper extends Component {
 
 export default TimerWrapper
 Button.propTypes = {
-  defaultButton: PropTypes.bool,
+  buttonType: PropTypes.oneOf(['timer', 'status', 'cancel']),
 }
 
 Button.defaultProps = {
-  defaultButton: true,
+  defaultButton: 'timer',
 }
