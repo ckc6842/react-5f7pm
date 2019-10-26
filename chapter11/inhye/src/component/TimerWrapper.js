@@ -52,6 +52,12 @@ class TimerWrapper extends Component {
     })
   }
 
+  componentDidUpdate () {
+    if (this.state.timeLeft === 0) {
+      document.getElementById('end-of-time').play()
+    }
+  }
+
 	render() {
 		return (
       <div className="row-fluid">

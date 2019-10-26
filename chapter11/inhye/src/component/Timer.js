@@ -7,14 +7,6 @@ class Timer extends Component {
     }
   }
 
-  componentDidUpdate (prevProp) {
-    if (prevProp.timeLeft !== this.props.timeLeft) {
-      if (this.props.timeLeft === 0) {
-        document.getElementById('end-of-time').play()
-      }
-    }
-  }
-
 	render() {
     if (this.props.timeLeft === null || this.props.timeLeft === 0) {
       return <div />
