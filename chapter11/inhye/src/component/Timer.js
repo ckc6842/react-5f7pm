@@ -3,19 +3,19 @@ import React, { Component } from 'react'
 class Timer extends Component {
 	constructor (props) {
     super(props)
-    this.state = {
-    }
+    this.renderTimeLeft = this.renderTimeLeft.bind(this)
   }
-
-	render() {
-    if (this.props.timeLeft === null || this.props.timeLeft === 0) {
-      return <div />
-    }
-		return (
+  renderTimeLeft () {
+    if (this.props.timeLeft === null || this.props.timeLeft === 0) return <div/>
+    return (
       <h1>
         Time Left: {this.props.timeLeft}
       </h1>
     )
+  }
+
+	render() {
+		return this.renderTimeLeft()
 	}
 }
 

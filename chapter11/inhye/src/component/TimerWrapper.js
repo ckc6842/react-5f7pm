@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Button from './Button'
 import Timer from './Timer'
-import PropTypes from 'prop-types'
-
+import TimerSound from './TimerSound'
 class TimerWrapper extends Component {
 	constructor (props) {
     super(props)
@@ -66,22 +65,15 @@ class TimerWrapper extends Component {
         <h2>Timer~~</h2>
         {this.renderChangeButton()}
         <div className="btn-group" role="group">
-          <Button buttonType="timer" time="5" startTimer={this.startTimer} />
-          <Button buttonType="timer" time="10" startTimer={this.startTimer} />
-          <Button buttonType="timer" time="15" startTimer={this.startTimer} />
+          <Button buttonType="timer" time={5} startTimer={this.startTimer} />
+          <Button buttonType="timer" time={10} startTimer={this.startTimer} />
+          <Button buttonType="timer" time={15} startTimer={this.startTimer} />
         </div>
         <Timer timeLeft={this.state.timeLeft} />
-        <audio id="end-of-time" src="/flute_c_long_01.wav" preload="auto"></audio>
+        <TimerSound timeLeft={this.state.timeLeft}/>
       </div>
 		)
 	}
 }
 
 export default TimerWrapper
-Button.propTypes = {
-  buttonType: PropTypes.oneOf(['timer', 'status', 'cancel']),
-}
-
-Button.defaultProps = {
-  defaultButton: 'timer',
-}

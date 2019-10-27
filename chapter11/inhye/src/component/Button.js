@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class Button extends Component {
 	constructor (props) {
@@ -69,3 +70,10 @@ class Button extends Component {
 }
 
 export default Button
+Button.propTypes = {
+  buttonType: PropTypes.oneOf(['timer', 'status', 'cancel']),
+}
+
+Button.defaultProps = {
+  defaultButton: 'timer',
+}
