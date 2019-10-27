@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import Button from './Button'
-import Timer from './Timer'
+import TimerButton from './TimerButton'
+import TimerLabel from './TimerLabel'
 import TimerSound from './TimerSound'
+import TimerSlider from './TimerSlider'
 class TimerWrapper extends Component {
 	constructor (props) {
     super(props)
     this.state = {
       timeLeft: null,
       timer: null,
+      time: 0,
     }
     this.startTimer = this.startTimer.bind(this)
     this.pauseTimer = this.pauseTimer.bind(this)
@@ -19,11 +21,11 @@ class TimerWrapper extends Component {
     if (this.state.timeLeft === null || this.state.timeLeft === 0) return
     return (
       <div>
-        <Button buttonType="status"
+        <TimerButton buttonType="status"
                 timeLeft={this.state.timeLeft}
                 pauseTimer={this.pauseTimer}
                 startTimer={this.startTimer} />
-        <Button buttonType="cancel" cancelTimer={this.cancelTimer}></Button>
+        <TimerButton buttonType="cancel" cancelTimer={this.cancelTimer} />
       </div>
     )
   }
@@ -65,12 +67,13 @@ class TimerWrapper extends Component {
         <h2>Timer~~</h2>
         {this.renderChangeButton()}
         <div className="btn-group" role="group">
-          <Button buttonType="timer" time={5} startTimer={this.startTimer} />
-          <Button buttonType="timer" time={10} startTimer={this.startTimer} />
-          <Button buttonType="timer" time={15} startTimer={this.startTimer} />
+          <TimerButton buttonType="timer" time={5} startTimer={this.startTimer} />
+          <TimerButton buttonType="timer" time={10} startTimer={this.startTimer} />
+          <TimerButton buttonType="timer" time={15} startTimer={this.startTimer} />
         </div>
-        <Timer timeLeft={this.state.timeLeft} />
-        <TimerSound timeLeft={this.state.timeLeft}/>
+        <TimerLabel timeLeft={this.state.timeLeft} />
+        <TimerSlider timeLeft={this.state.timeLeft} />
+        <TimerSound timeLeft={this.state.timeLeft} />
       </div>
 		)
 	}

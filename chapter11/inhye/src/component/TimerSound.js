@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class TimerSound extends Component {
-	// constructor (props) {
-  //   super(props)
-  // }
 
   componentDidUpdate () {
     if (this.props.timeLeft === 0) {

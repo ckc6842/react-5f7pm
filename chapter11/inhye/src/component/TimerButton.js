@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-class Button extends Component {
+class TimerButton extends Component {
 	constructor (props) {
     super(props)
     this.state = {
@@ -69,11 +69,11 @@ class Button extends Component {
 	}
 }
 
-export default Button
-Button.propTypes = {
+export default TimerButton
+TimerButton.propTypes = {
   buttonType: PropTypes.oneOf(['timer', 'status', 'cancel']),
 }
 
-Button.defaultProps = {
+TimerButton.defaultProps = {
   defaultButton: 'timer',
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Timer extends Component {
+class TimerLabel extends Component {
 	constructor (props) {
     super(props)
     this.renderTimeLeft = this.renderTimeLeft.bind(this)
@@ -19,4 +19,4 @@ class Timer extends Component {
 	}
 }
 
-export default Timer
+export default TimerLabel
