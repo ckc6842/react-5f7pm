@@ -17,14 +17,14 @@ class TimerWrapper extends Component {
   }
 
   renderChangeButton () {
-    if (this.state.timeLeft === null) return
+    if (this.state.timeLeft === null || this.state.timeLeft === 0) return
     return (
       <div>
         <Button buttonType="status"
                 timeLeft={this.state.timeLeft}
                 pauseTimer={this.pauseTimer}
                 startTimer={this.startTimer} />
-      <Button buttonType="cancel" cancelTimer={this.cancelTimer}></Button>
+        <Button buttonType="cancel" cancelTimer={this.cancelTimer}></Button>
       </div>
     )
   }
@@ -33,11 +33,13 @@ class TimerWrapper extends Component {
     this.pauseTimer()
     let timer = setInterval(() => {
       var timeLeft = this.state.timeLeft - 1
-      //  남은 시간이 0일때 clear
-      if (timeLeft === 0) clearInterval(timer)
+      if (timeLeft === 0) {
+        this.cancelTimer()
+        clearInterval(timer)
+      }
       this.setState({ timeLeft: timeLeft })
     }, 1000)
-    return this.setState({ timeLeft: timeLeft, timer: timer })
+    this.setState({ timeLeft: timeLeft, timer: timer })
   }
 
   pauseTimer () {

@@ -5,7 +5,6 @@ class Button extends Component {
     super(props)
     this.state = {
       status: 'Pause',
-      timeLeft: null,
     }
     this.stopTimer = this.stopTimer.bind(this)
     this.restartTimer = this.restartTimer.bind(this)
@@ -27,24 +26,18 @@ class Button extends Component {
 
   restartTimer () {
     if (this.props.timeLeft > 0) {
-      this.setState({
-        status: 'Restart',
-        timeLeft: this.props.timeLeft,
-      })
+      this.setState({status: 'Restart'})
       this.props.pauseTimer()
     }
     if (this.state.status === 'Restart') {
-      this.props.startTimer(this.state.timeLeft)
+      this.props.startTimer(this.props.timeLeft)
     }
   }
 
   stopTimer () {
     if (this.props.timeLeft > 0) {
-      this.setState({
-        status: 'Pause',
-      })
+      this.setState({status: 'Pause'})
     }
-    return this.props.timeLeft
   }
 
   renderText () {
