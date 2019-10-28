@@ -1,0 +1,11 @@
+.TimerButton_basic-layout {
+    width: 120px;
+    height: 30px;
+    margin: 5px;
+}
+
+.TimerButton_basic-text {
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'IBM Plex Mono', Menlo, Monaco, 'Courier New';
+}
