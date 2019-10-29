@@ -47,7 +47,11 @@ class TimerSound extends Component {
     // }
 
     render() {
-        return <audio ref={this.audioPlayer} src="{this.state.src}" preload="auto"></audio>
+        return <audio 
+            ref={this.audioPlayer} 
+            src={this.state.src} 
+            preload="auto">
+        </audio>
     }
 }
 

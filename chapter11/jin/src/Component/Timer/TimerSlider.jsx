@@ -20,7 +20,12 @@ class TimerSlider extends Component {
     }
 
     render () {
-        return <input type="range" min="0" max={this.props.timeStarted} value={this.buildSliderValue()}>
+        return <input 
+            type="range" 
+            min="0" 
+            max={this.props.timeStarted} 
+            value={this.buildSliderValue()}
+            readonly>
         </input>
     }
 

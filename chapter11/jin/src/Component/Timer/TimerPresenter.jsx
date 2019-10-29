@@ -34,7 +34,7 @@ class TimerPresenter extends Component {
                 // TODO: 발행된 이벤트를 받는 콜백을 사용하지 않고 직접 호출하는 방법은 없나? 클래스인데?
                 // 이벤트를 발행하고 처리를 한다고 하더라도 깃허브 과제처럼 사운드 플레이에 대한 이벤트 명을 알아야 한다면, 
                 // 컨트롤이 주시하고 있는 이벤트 명을 명시적으로 어떻게 노출하는가? (소스코드를 보고? 문서를 보고?)
-                // this.timerEndedSound.playSound()
+                this.timerEndedSound.current.playSound()
             }
             this.setState({ timeLeft: timeLeft })
         }, 1000)
