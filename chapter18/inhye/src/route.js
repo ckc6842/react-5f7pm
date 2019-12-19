@@ -21,6 +21,7 @@ const PRODUCTS = [
 
 let cartItems = {}
 const addToCart = (id) => {
+  console.log('addtocart', id)
   if (cartItems[id]) {
     cartItems[id] += 1
   } else {
@@ -33,11 +34,10 @@ export default (
     <Switch>
       <Route exact path="/" component={Index} />
       <Route path="/products/:id"
-             render={(props) => (
-                      <Product {...props} products={PRODUCTS} addToCart={addToCart}/>
-                    )} />
-      <Route path="/cart" component={Cart} cartItems={cartItems} products={PRODUCTS}/>
-      <Route path="/checkout" component={Checkout} cartItems={cartItems} products={PRODUCTS}/>
+             render={(props) => <Product {...props} products={PRODUCTS} addToCart={addToCart} />} />
+      <Route path="/cart"
+             render={(props) => <Cart {...props} products={PRODUCTS} cartItems={cartItems} />} />
+      <Route path="/checkout" component={Checkout} cartItems={cartItems} products={PRODUCTS} />
     </Switch>
   </BrowserRouter>
 )
