@@ -37,7 +37,9 @@ export default (
              render={(props) => <Product {...props} products={PRODUCTS} addToCart={addToCart} />} />
       <Route path="/cart"
              render={(props) => <Cart {...props} products={PRODUCTS} cartItems={cartItems} />} />
-      <Route path="/checkout" component={Checkout} cartItems={cartItems} products={PRODUCTS} />
+      {/* <Route path="/checkout" component={Checkout} cartItems={cartItems} products={PRODUCTS} /> */}
+      <Route path="/checkout"
+             render={(props) => <Checkout {...props} products={PRODUCTS} cartItems={cartItems} />} />
     </Switch>
   </BrowserRouter>
 )

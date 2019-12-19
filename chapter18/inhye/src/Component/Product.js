@@ -16,7 +16,7 @@ class Product extends Component {
 	render() {
     console.log(this)
 		return (
-      <div>
+      <div style={{ padding: '20px' }}>
         <img src={this.props.products[this.props.match.params.id].src} style={{ height: '80%' }} />
         <p>
           { this.props.products[this.props.match.params.id].title }
