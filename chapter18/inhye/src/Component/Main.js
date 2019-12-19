@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import Modal from './Modal.js'
 const Heading = () => {
-  return <h1>Inhye Book Store</h1>
+  return (
+    <>
+      <h1>Inhye Book Store</h1>
+      <hr/>
+    </>
+  )
 }
 
 class Main extends Component {
@@ -22,7 +27,7 @@ class Main extends Component {
 
 	render() {
 		return (
-      <div className="main-layout">
+      <div className="main-layout" style={{ padding: '20px' }}>
         <Heading/>
         <div>
           {

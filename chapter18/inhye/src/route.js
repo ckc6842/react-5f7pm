@@ -30,10 +30,12 @@ const addToCart = (id) => {
 export default (
   <BrowserRouter>
     <Route exact={true} path="/" component={Main} />
-    {/* <IndexRoute component={Index}/> */}
     <Switch>
       <Route exact path="/" component={Index} />
-      <Route path="/products/:id" component={Product} addToCart={addToCart} products={PRODUCTS} />
+      <Route path="/products/:id"
+             render={(props) => (
+                      <Product {...props} products={PRODUCTS} addToCart={addToCart}/>
+                    )} />
       <Route path="/cart" component={Cart} cartItems={cartItems} products={PRODUCTS}/>
       <Route path="/checkout" component={Checkout} cartItems={cartItems} products={PRODUCTS}/>
     </Switch>

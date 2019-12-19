@@ -9,22 +9,22 @@ class Product extends Component {
     this.handleBuy = this.handleBuy.bind(this)
   }
 
-  componentDidUpdate(nextProps) {
+  handleBuy (event) {
+    this.props.addToCart(this.props.match.params.id)
   }
 
-  componentDidMount() {}
-
 	render() {
+    console.log(this)
 		return (
       <div>
-        <img src={this.props.route.products[this.props.params.id].src} style={{ height: '80%' }} />
+        <img src={this.props.products[this.props.match.params.id].src} style={{ height: '80%' }} />
         <p>
-          { this.props.route.products[this.props.params.id].title }
+          { this.props.products[this.props.match.params.id].title }
         </p>
         <Link
           to={{
             pathname: `/cart`,
-            state: { productId: this.props.params.id}
+            state: { productId: this.props.match.params.id}
           }}
           onClick={this.handleBuy}
           className="btn btn-primary">

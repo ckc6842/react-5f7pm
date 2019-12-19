@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 const Copy = () => {
-  return <p>팝업에 대한 자세한 내용을 확인하려면 책을 클릭하세요. 팝업의 링크를 복사하거나 붙여넣을 수 있습니다. 링크는 책에 대한 별도의 페이지로 안내됩니다.</p>
+  return <p>팝업에 대한 자세한 내용을 확인하려면 책을 클릭하세요. <br/>팝업의 링크를 복사하거나 붙여넣을 수 있습니다. 링크는 책에 대한 별도의 페이지로 안내됩니다.</p>
 }
 
 const PRODUCTS = [
@@ -27,7 +27,7 @@ class Index extends Component {
 
 	render() {
 		return (
-      <div>
+      <div style={{ padding: '30px' }}>
         <Copy/>
         <p>
           <Link to="/cart" className="btn btn-danger">
