@@ -5,6 +5,7 @@ class Product extends Component {
 	constructor (props) {
     super(props)
     this.state = {
+      products: [],
     }
     this.handleBuy = this.handleBuy.bind(this)
   }
@@ -13,13 +14,20 @@ class Product extends Component {
     this.props.addToCart(this.props.match.params.id)
   }
 
+  componentDidMount () {
+    this.props.getProduct().then((products) => {
+      this.setState({ products })
+    })
+  }
+  
 	render() {
     console.log(this)
+    if (this.state.products && this.state.products.length === 0) return <></>
 		return (
       <div style={{ padding: '20px' }}>
-        <img src={this.props.products[this.props.match.params.id].src} style={{ height: '80%' }} />
+        <img src={this.state.products[this.props.match.params.id].src} style={{ height: '80%' }} />
         <p>
-          { this.props.products[this.props.match.params.id].title }
+          { this.state.products[this.props.match.params.id].title }
         </p>
         <Link
           to={{

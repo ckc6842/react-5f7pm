@@ -4,12 +4,19 @@ class Checkout extends Component {
 	constructor (props) {
     super(props)
     this.state = {
+      products: [],
     }
   }
 
-  componentDidMount() {}
+  componentDidMount () {
+    this.props.getProduct().then((products) => {
+      this.setState({ products })
+    })
+  }
 
 	render() {
+    if (this.state.products && this.state.products.length === 0) return <></>
+
 		let count = 0
     return (
     <div style={{ padding: '20px' }}>
@@ -22,7 +29,7 @@ class Checkout extends Component {
             return <>
               <tr key={item}>
                 <td>
-                  {this.props.products[item].title}
+                  {this.state.products[item].title}
                 </td>
                 <td>
                   {this.props.cartItems[item]}
