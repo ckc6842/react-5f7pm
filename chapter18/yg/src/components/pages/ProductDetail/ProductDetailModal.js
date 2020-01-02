@@ -1,26 +1,22 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
-import Modal from '../../Modal'
-
+import { Modal } from '../../'
 import ProductDetail from './ProductDetail'
-
-const propTypes = {
-  visibility: PropTypes.bool.isRequired,
-  setVisibility: PropTypes.func.isRequired,
-}
 
 class ProductDetailModal extends Component {
   render () {
-    const { visibility, setVisibility } = this.props
+    const { isOpened, onClose, bookId } = this.props
     return (
-      <Modal visibility={ visibility } setVisibility={ setVisibility }>
-        <ProductDetail />
+      <Modal isOpened={ isOpened } onClose={ onClose }>
+        <ProductDetail bookId={ bookId } />
       </Modal>
     )
   }
 }
 
-ProductDetailModal.propTypes = propTypes
+ProductDetailModal.propTypes = {
+  ...Modal.propTypes,
+  ...ProductDetail.propTypes,
+}
 
 export default ProductDetailModal
