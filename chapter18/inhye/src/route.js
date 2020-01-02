@@ -31,7 +31,8 @@ export default (
     <Route exact={true} path="/"
     render={(props) => <Main {...props}/>}/>
     <Switch>
-      <Route exact path="/" component={Index} />
+      <Route exact path="/"
+             render={(props) => <Index {...props} getProduct={getProduct} />} />
       <Route path="/products/:id"
              render={(props) => <Product {...props} addToCart={addToCart} getProduct={getProduct} />} />
       <Route path="/cart"

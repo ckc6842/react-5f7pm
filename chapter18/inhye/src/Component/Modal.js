@@ -15,7 +15,7 @@ class Modal extends Component {
       padding: 20,
       boxShadow: '0px 0px 150px 130px rgba(0, 0, 0, 0.5)',
       overflow: 'auto',
-      background: '#fff'
+      background: 'red'
     }
   }
 
