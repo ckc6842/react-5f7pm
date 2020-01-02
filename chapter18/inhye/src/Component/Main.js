@@ -32,30 +32,12 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    console.log('this.propsthis.props', this)
   }
 
 	render() {
 		return (
       <div className="main-layout" style={{ padding: '20px' }}>
         <Heading/>
-        <div>
-          {
-            this.state.isModal
-            ? this.state.previousChildren
-            : this.props.children
-          }
-          {/* {this.props.children} */}
-          {
-            this.state.isModal
-            ? (
-              <Modal returnTo={this.props.location.state.returnTo}>
-                {this.props.children}
-              </Modal>
-            )
-            : ''
-          }
-        </div>
       </div>
 		)
 	}

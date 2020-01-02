@@ -14,7 +14,9 @@ class Index extends Component {
   }
   componentDidMount () {
     this.props.getProduct().then((products) => {
-      this.setState({ products })
+      this.setState({ products }, () => {
+        console.log('this.propsthis.props', this)
+      })
     })
   }
 

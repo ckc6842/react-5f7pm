@@ -10,6 +10,7 @@ import Index from './Component/Index'
 import Cart from './Component/Cart'
 import Product from './Component/Product'
 import Checkout from './Component/Checkout'
+import Modal from './Component/Modal'
 
 let cartItems = {}
 const addToCart = (id) => {
@@ -34,7 +35,16 @@ export default (
       <Route exact path="/"
              render={(props) => <Index {...props} getProduct={getProduct} />} />
       <Route path="/products/:id"
-             render={(props) => <Product {...props} addToCart={addToCart} getProduct={getProduct} />} />
+             render={(props) => {
+              if (props.location.state === undefined) {
+                return <Product {...props} addToCart={addToCart} getProduct={getProduct} />
+              } else {
+                return <Modal {...props}
+                              returnTo={ props.location.state.returnTo }
+                              addToCart={addToCart}
+                              getProduct={getProduct}/>
+              }
+             }} />
       <Route path="/cart"
              render={(props) => <Cart {...props} cartItems={cartItems} getProduct={getProduct} />} />
       <Route path="/checkout"
