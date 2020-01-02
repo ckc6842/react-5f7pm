@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
-import { Provider, connect } from 'react-redux'
+import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import App from './components/App'
 import Index from './components/Index'
@@ -22,14 +22,13 @@ const addToCart = (id) => {
 }
 
 let store = createStore(bookStoreApp)
-console.log(store)
 
 class Routes extends React.Component {
   render () {
     return (
       <Router>
         <Route path="/" component={App}/>
-        <Route path="/" exact component={(props) => <Index {...props} />}/>
+        <Route path="/" component={(props) => <Index {...props} />}/>
         <Route path="/products/:id" component={(props) => <Product {...props} addToCart={addToCart} />}/>
         <Route path="/cart" component={(props) => <Cart {...props} cartItems={cartItems} />} />
         <Route path="/checkout" component={(props) => <Checkout {...props} cartItems={cartItems} />} />
@@ -37,8 +36,6 @@ class Routes extends React.Component {
     )
   }
 }
-
-// const Container = connect(store)(Routes)
 
 class Root extends React.Component {
   constructor () {

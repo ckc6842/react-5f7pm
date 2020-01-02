@@ -21,8 +21,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate () {
-    console.log(this.props.location)
-    this.isModal = this.props.location.state && this.props.location.state.isModal
+    // this.isModal = this.props.location.state && this.props.location.state.isModal
     // if (this.isModal &&
     //   this.props.location.key !== this.props.location.key) {
     //   this.previousChildren = this.props.children
@@ -30,13 +29,12 @@ class App extends React.Component {
   }
 
   render () {
-    console.log(this.store)
     return (
       <div>
         <Heading />
         <div>
-          {(this.isModal) ? this.previousChildren : this.props.children}
-          {(this.isModal) ?
+          {(this.props.isModal) ? this.previousChildren : this.props.children}
+          {(this.props.isModal) ?
             <Modal isOpen={true} returnTo={this.props.location.state.returnTo}>
               {this.props.childern}
             </Modal>
@@ -50,7 +48,11 @@ class App extends React.Component {
 }
 
 App = connect(
-  undefined,
+  state => {
+    return {
+      isModal: state.ui.isModal
+    }
+  },
   dispatch => {
     return {
       doFetchProducts: (products) => dispatch(fetchProducts(products))

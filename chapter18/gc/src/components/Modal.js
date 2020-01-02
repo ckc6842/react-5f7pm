@@ -2,6 +2,9 @@ import React from 'react'
 import {
   Link
 } from 'react-router-dom'
+import Product from './Product'
+import { connect } from 'react-redux'
+import { toggleModal } from '../actions'
 
 class Modal extends React.Component {
   constructor (props) {
@@ -22,16 +25,25 @@ class Modal extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     return (
       <div style={this.styles}>
         <p>
-          <Link to={this.props.returnTo}>뒤로 가기</Link>
+          {/* <Link onClick={this.props.toggleModal}>뒤로 가기</Link> */}
         </p>
-        {this.props.children}
+        {/* {this.props.children} */}
+        <Product />
       </div>
     )
   }
 }
+
+Modal = connect(
+  null,
+  dispatch => {
+    return {
+      toggleModal: () => dispatch(toggleModal())
+    }
+  }
+)(Modal)
 
 export default Modal
