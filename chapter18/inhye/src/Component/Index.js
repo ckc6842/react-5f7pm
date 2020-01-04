@@ -12,20 +12,11 @@ class Index extends Component {
       products: [],
     }
   }
-  componentDidMount () {
-    this.props.getProduct().then((products) => {
-      this.setState({ products }, () => {
-        console.log('this.propsthis.props', this)
-      })
-    })
-  }
-
-  componentDidUpdate() {
-  }
 
 	render() {
-    if (this.state.products && this.state.products.length === 0) return <></>
+    if (this.props.products && this.props.products.length === 0) return <></>
 
+    let { products, location } = this.props
 		return (
       <div style={{ padding: '30px' }}>
         <Copy/>
@@ -36,14 +27,14 @@ class Index extends Component {
         </p>
         <div>
           {
-            this.state.products.map((picture) => (
+            products.map((picture) => (
               <Link key={ picture.id }
                     to={
                       {
                         pathname: `/products/${picture.id}`,
                         state: {
                           modal: true,
-                          returnTo: this.props.location.pathname
+                          returnTo: location.pathname
                         }
                       }
                     }>

@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 
 import Main from './Component/Main'
-import Index from './Component/Index'
+// import Index from './Component/Index'
 import Cart from './Component/Cart'
 import Product from './Component/Product'
 import Checkout from './Component/Checkout'
@@ -14,7 +14,6 @@ import Modal from './Component/Modal'
 
 let cartItems = {}
 const addToCart = (id) => {
-  console.log('addtocart', id)
   if (cartItems[id]) {
     cartItems[id] += 1
   } else {
@@ -30,14 +29,17 @@ const getProduct = async () => {
 export default (
   <BrowserRouter>
     <Route exact={true} path="/"
-    render={(props) => <Main {...props}/>}/>
+           render={(props) => <Main {...props} getProduct={getProduct}/>}/>
     <Switch>
-      <Route exact path="/"
-             render={(props) => <Index {...props} getProduct={getProduct} />} />
+      {/* <Route exact path="/"
+             render={(props) => <Index {...props} getProduct={getProduct} />} /> */}
       <Route path="/products/:id"
              render={(props) => {
+               console.log('route props', props)
               if (props.location.state === undefined) {
-                return <Product {...props} addToCart={addToCart} getProduct={getProduct} />
+                return <Product {...props}
+                                addToCart={addToCart}
+                                getProduct={getProduct} />
               } else {
                 return <Modal {...props}
                               returnTo={ props.location.state.returnTo }
