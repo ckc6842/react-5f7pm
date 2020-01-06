@@ -28,9 +28,8 @@ class Modal extends React.Component {
     return (
       <div style={this.styles}>
         <p>
-          {/* <Link onClick={this.props.toggleModal}>뒤로 가기</Link> */}
+          <Link to="/" onClick={this.props.toggleModal}>뒤로 가기</Link>
         </p>
-        {/* {this.props.children} */}
         <Product />
       </div>
     )

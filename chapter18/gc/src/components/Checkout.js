@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Link
 } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class Checkout extends React.Component {
   render () {
@@ -25,5 +26,19 @@ class Checkout extends React.Component {
     )
   }
 }
+
+Checkout = connect(
+  state => {
+    return {
+      cartItems: state.cart,
+      products: state.products.products,
+    }
+  },
+  dispatch => {
+    return {
+      
+    }
+  }
+)(Checkout)
 
 export default Checkout

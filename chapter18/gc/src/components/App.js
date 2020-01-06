@@ -33,9 +33,8 @@ class App extends React.Component {
       <div>
         <Heading />
         <div>
-          {(this.props.isModal) ? this.previousChildren : this.props.children}
           {(this.props.isModal) ?
-            <Modal isOpen={true} returnTo={this.props.location.state.returnTo}>
+            <Modal isOpen={true}>
               {this.props.childern}
             </Modal>
             :
