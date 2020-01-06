@@ -15,7 +15,6 @@ const propTypes = {
 class ProductDetail extends Component {
   render () {
     const { bookList, bookId } = this.props
-    console.log(this.props)
     const selectedBook = bookList.find((book) => book.id === bookId)
     if (!selectedBook) {
       return this.renderItemNotFound()

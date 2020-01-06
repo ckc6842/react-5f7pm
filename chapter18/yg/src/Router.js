@@ -8,7 +8,7 @@ import {
 
 import {
   BookListPage,
-  ProductDetailPage,
+  // ProductDetailPage,
   CartPage,
   CheckoutPage,
 } from './components/pages'
@@ -18,24 +18,30 @@ const routes = [
     name: 'Main Page',
     path: '/',
     component: BookListPage,
+    props: {
+      isDetailPage: false,
+    },
     exact: true,
   },
   {
     name: 'Product',
     path: '/product/:id',
-    exact: true,
-    component: ProductDetailPage,
+    exact: false,
+    props: {
+      isDetailPage: true,
+    },
+    component: BookListPage,
   },
   {
     name: 'Cart',
     path: '/cart',
-    exact: true,
+    exact: false,
     component: CartPage,
   },
   {
     name: 'Checkout',
     path: '/checkout',
-    exact: true,
+    exact: false,
     component: CheckoutPage,
   },
 ]
@@ -46,11 +52,13 @@ class Router extends Component {
       <HashRouter>
         <Switch>
           {
-            routes.map(({ path, exact, component }, index) =>
+            routes.map(({ path, exact, component: Component, props }, index) =>
               <Route key={ index }
                      exact={ exact }
                      path={ path }
-                     component={ component } />
+                     render={ (parentProps) =>
+                       <Component {...parentProps} {...props} /> }
+              />
             )
           }
           <Redirect to="/" />
