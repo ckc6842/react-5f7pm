@@ -12,15 +12,6 @@ import Checkout from './components/Checkout'
 import Product from './components/Product'
 import bookStoreApp from './reducer'
 
-let cartItems = {}
-const addToCart = (id) => {
-  if (cartItems[id]) {
-    cartItems[id] += 1
-  } else {
-    cartItems[id] = 1
-  }
-}
-
 let store = createStore(bookStoreApp)
 
 class Routes extends React.Component {
@@ -28,10 +19,11 @@ class Routes extends React.Component {
     return (
       <Router>
         <Route path="/" component={App}/>
-        <Route path="/" component={(props) => <Index {...props} />}/>
-        <Route path="/products/:id" component={(props) => <Product {...props} addToCart={addToCart} />}/>
-        <Route path="/cart" component={(props) => <Cart {...props} cartItems={cartItems} />} />
-        <Route path="/checkout" component={(props) => <Checkout {...props} cartItems={cartItems} />} />
+        <Route path="/" exact component={(props) => <Index {...props} />}/>
+        <Route path="/products" component={(props) => <Index {...props} />}/>
+        <Route path="/products/:id" component={(props) => <Product {...props} />}/>
+        <Route path="/cart" component={(props) => <Cart {...props} />} />
+        <Route exact path="/checkout" component={(props) => <Checkout {...props} />} />
       </Router>
     )
   }
@@ -44,16 +36,6 @@ class Root extends React.Component {
     this.state = {
       products: []
     }
-  }
-
-  componentDidMount () {
-    fetch('/products.json')
-      .then((response) => response.json())
-      .then((products) => {
-        this.setState({
-          products: products
-        })
-      })
   }
 
   render () {
