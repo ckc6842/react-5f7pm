@@ -1,14 +1,35 @@
 import CART_ACTIONS from '../actions/cart'
 
 const initialState = {
-  cart: [],
+  cart: [
+    // Dummy Item
+    // {
+    //   id: 999,
+    //   book: {
+    //     id: 999,
+    //     name: 'Dummy Book',
+    //   },
+    //   quantity: 999,
+    // },
+  ],
 }
 
+// 기존 아이템이 있으면 quantity 증가, 없으면 아이템 추가
 const addCartItem = (prevCart, cartItem) => {
-  return [
-    ...prevCart,
-    cartItem,
-  ]
+  prevCart = JSON.parse(JSON.stringify(prevCart))
+  let existItem = prevCart.find(prevItem => prevItem.id === cartItem.id)
+  const addQuantity = cartItem.quantity || 1
+  if (existItem) {
+    existItem.quantity = existItem.quantity + addQuantity
+    return prevCart
+  } else {
+    existItem = cartItem
+    existItem.quantity = addQuantity
+    return [
+      ...prevCart,
+      existItem,
+    ]
+  }
 }
 
 const removeCartItem = (prevCart, itemId) => {

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Button } from '../../'
+import { LinkButton } from '../../'
 
 import connectBookList from '../../../store/containers/bookList'
+import connectCart from '../../../store/containers/cart'
 
 const propTypes = {
   bookId: PropTypes.number.isRequired,
@@ -13,9 +14,16 @@ const propTypes = {
 }
 
 class ProductDetail extends Component {
+  constructor (props) {
+    super(props)
+    const { bookList, bookId } = props
+    this.state = {
+      selectedBook: bookList.find((book) => book.id === bookId),
+    }
+    this.addCartItem = this.addCartItem.bind(this)
+  }
   render () {
-    const { bookList, bookId } = this.props
-    const selectedBook = bookList.find((book) => book.id === bookId)
+    const { selectedBook } = this.state
     if (!selectedBook) {
       return this.renderItemNotFound()
     }
@@ -50,18 +58,33 @@ class ProductDetail extends Component {
 
   renderFooterButtons () {
     return <DetailFooter>
-      <Button theme="contained">카트에 담기</Button>
-      <Button theme="outline"
-              onClick={ () => this.props.history.replace('/') }>
+      <LinkButton theme="contained" to="/cart"
+                  onClick={ this.addCartItem }>
+        카트에 담기
+      </LinkButton>
+      <LinkButton theme="outline" to="/">
         뒤로 가기
-      </Button>
+      </LinkButton>
     </DetailFooter>
+  }
+  addCartItem () {
+    // TODO: 현재는 book의 id를 사용하고 있으나 별도의 cartItem id를 부여하는 것이 좋음
+    const book = JSON.parse(JSON.stringify(this.state.selectedBook))
+    const cartItem = {
+      id: book.id,
+      book,
+    }
+    this.props.addCartItem(cartItem)
   }
 }
 
 ProductDetail.propTypes = propTypes
 
-export default withRouter(connectBookList(ProductDetail))
+export default withRouter(
+  connectCart(
+    connectBookList(ProductDetail)
+  )
+)
 
 const DetailHeader = styled.h1`
   font-size: 20pt;
