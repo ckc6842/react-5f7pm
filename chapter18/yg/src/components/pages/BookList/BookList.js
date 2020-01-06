@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
 
 import { Button } from '../../'
 import connectBookList from '../../../store/containers/bookList'
+import ProductDetailPage from '../ProductDetail/ProductDetailPage'
 import ProductDetailModal from '../ProductDetail/ProductDetailModal'
+import { Link } from 'react-router-dom'
 
 class BookListPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
       selectedBookId: -1,
+      isDetailPage: props.isDetailPage,
       isModalOpened: false,
     }
     this.closeModal = this.closeModal.bind(this)
@@ -27,8 +29,13 @@ class BookListPage extends Component {
   }
 
   render () {
-    const { selectedBookId, isModalOpened } = this.state
-    const { bookList } = this.props
+    const { selectedBookId, isModalOpened, isDetailPage } = this.state
+    const { bookList, location } = this.props
+    const { state = {} } = location
+    const { isModal } = state
+    if (!isModal && isDetailPage) {
+      return <ProductDetailPage />
+    }
     return (
       <>
         <h1>YG 서점</h1>
@@ -40,8 +47,10 @@ class BookListPage extends Component {
         <BookList>
           {
             bookList.map((book, index) =>
-              <BookButton key={ index }
-                          onClick={ () => this.onClickBook(book) }>
+              <BookButton to={{
+                            pathname: `/product/${book.id}`,
+                            state: { isModal: true },
+                          }} key={ index }>
                 <BookImg src={ book.bookImg } alt={ book.name } />
               </BookButton>
             )
@@ -55,17 +64,16 @@ class BookListPage extends Component {
   }
 
   onChangeLocation () {
-    const { location } = this.props
-    const { bookId } = queryString.parse(location.search)
+    const bookId = this.props.match.params.id
     this.setState({
       selectedBookId: bookId ? Number.parseInt(bookId) : -1,
       isModalOpened: !!bookId,
     })
   }
 
-  onClickBook (book) {
-    this.props.history.replace(`/?bookId=${book.id}`)
-  }
+  // onClickBook (book) {
+  //   this.props.history.replace(`/product/${book.id}`)
+  // }
 
   closeModal () {
     this.props.history.replace('/')
@@ -88,7 +96,7 @@ const BookButton = Button.withComponent(
     border: none;
     background: none;
     padding-left: 0 !important;
-  `
+  `.withComponent(Link)
 )
 
 const BookImg = styled.img`
