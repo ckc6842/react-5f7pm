@@ -20,6 +20,7 @@ class Index extends React.Component {
   }
 
   render () {
+    if (!this.props.isModal && this.props.match.path === '/products' ) return <div></div>
     return (
       <div>
         <Copy />
@@ -28,8 +29,7 @@ class Index extends React.Component {
         </p>
         <div>
           {
-            this.props.isModal ?
-            '' : this.props.products.map(product => (
+            this.props.products.map(product => (
               <Link key={product.id}
                     onClick={this.handleSelectProduct(product.id)}
                     to={{pathname: `/products/${product.id}`,

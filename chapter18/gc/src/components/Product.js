@@ -8,31 +8,34 @@ import { selectProduct, addToCart, toggleModal } from '../actions'
 class Product extends React.Component {
   constructor (props) {
     super(props)
-    this.handleBuy = this.handleBuy.bind(this)
   }
 
   componentDidMount() {
-    if (!this.props.productId) {
+    if (this.props.productId === undefined) {
       this.props.selectProduct(this.props.match.params.id)
     }
   }
 
-  handleBuy (event) {
+  handleBuy = (event) => () => {
     this.props.addToCart(this.props.productId)
-    this.props.toggleModal()
+
+    if (this.props.isModal) {
+      this.props.toggleModal()
+    }
   }
 
   render () {
     var productId = this.props.productId
     var product = this.props.products ? this.props.products[productId] : undefined
     if (!product) return <div></div>
+    if (this.props.isModal && this.props.match) return <div></div>
 
     return (
       <div>
         <img src={product.src} />
         <p>{product.title}</p>
         <Link to={{pathname: '/cart', state: {productId: productId}}}
-              onClick={this.handleBuy}
+              onClick={this.handleBuy()}
               className="btn btn-primary">
           구매하기
         </Link>
@@ -45,7 +48,8 @@ Product = connect(
   state => {
     return {
       products: state.products.products,
-      productId: state.products.productId
+      productId: state.products.productId,
+      isModal: state.ui.isModal
     }
   },
   dispatch => {
@@ -54,13 +58,7 @@ Product = connect(
       addToCart: (productId) => dispatch(addToCart(productId)),
       toggleModal: () => dispatch(toggleModal())
     }
-  },
-  // (stateProps, dispatchProps, ownProps) => {
-  //   return Object.assign({}, ownProps, {
-  //     ...stateProps,
-  //     ...dispatchProps,
-  //   })
-  // }
+  }
 )(Product)
 
 export default Product
