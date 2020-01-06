@@ -3,18 +3,21 @@ import {
   Link
 } from 'react-router-dom'
 
+import { connect } from 'react-redux'
+import { addCart } from '../actions'
+
 class Cart extends React.Component {
   render () {
     console.log(this.props)
     return (
       <div>
-        {(Object.keys(this.props.cartItems).length === 0) ?
+        {(Object.keys(this.props.cart).length === 0) ?
         <p>카트에 담은 상품이 없습니다.</p> : ''}
         <ul>
-          {Object.keys(this.props.cartItems).map((item, index, list) => (
+          {Object.keys(this.props.cart).map((item, index, list) => (
             <li key={item}>
               {this.props.products[item].title}
-              - {this.props.cartItems[item]}
+              - {this.props.cart[item]}
             </li>
           ))}
         </ul>
@@ -30,5 +33,14 @@ class Cart extends React.Component {
     )
   }
 }
+
+Cart = connect(
+  state => {
+    return {
+      cart: state.cart,
+      products: state.products.products
+    }
+  }
+)(Cart)
 
 export default Cart

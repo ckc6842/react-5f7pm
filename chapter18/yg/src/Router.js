@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
-import { HashRouter, Route, Redirect, Switch } from 'react-router-dom'
+import {
+  HashRouter,
+  Route,
+  Redirect,
+  Switch,
+} from 'react-router-dom'
 
 import {
-  MainPage,
-  ProductPage,
+  BookListPage,
+  ProductDetailPage,
   CartPage,
   CheckoutPage,
 } from './components/pages'
@@ -12,14 +17,14 @@ const routes = [
   {
     name: 'Main Page',
     path: '/',
-    component: MainPage,
+    component: BookListPage,
     exact: true,
   },
   {
     name: 'Product',
     path: '/product/:id',
     exact: true,
-    component: ProductPage,
+    component: ProductDetailPage,
   },
   {
     name: 'Cart',
@@ -41,9 +46,12 @@ class Router extends Component {
       <HashRouter>
         <Switch>
           {
-            routes.map(({ path, exact, component }) => {
-              return <Route exact={ exact } path={ path } component={ component } />
-            })
+            routes.map(({ path, exact, component }, index) =>
+              <Route key={ index }
+                     exact={ exact }
+                     path={ path }
+                     component={ component } />
+            )
           }
           <Redirect to="/" />
         </Switch>

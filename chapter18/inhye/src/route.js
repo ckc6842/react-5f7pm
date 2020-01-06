@@ -4,42 +4,53 @@ import {
   Route,
   Switch,
 } from 'react-router-dom'
-// import App from './App';
+
 import Main from './Component/Main'
-import Index from './Component/Index'
+// import Index from './Component/Index'
 import Cart from './Component/Cart'
 import Product from './Component/Product'
 import Checkout from './Component/Checkout'
-
-const PRODUCTS = [
-  { id: 0, src: '/images/proexpress-cover.jpg', title: 'Pro Express.js', url: 'http://amzn.to/1D6qiqk' },
-  { id: 1, src: '/images/practicalnode-cover.jpeg', title: 'Practical Node.js', url: 'http://amzn.to/NuQ0fM' },
-  { id: 2, src: '/images/expressapiref-cover.jpg', title: 'Express API Reference', url: 'http://amzn.to/1xcHanf' },
-  { id: 3, src: '/images/reactquickly-cover.jpg', title: 'React Quickly', url: 'https://www.manning.com/books/react-quickly'},
-  { id: 4, src: '/images/fullstack-cover.png', title: 'Full Stack JavaScript', url: 'http://www.apress.com/9781484217504'}
-]
+import Modal from './Component/Modal'
 
 let cartItems = {}
 const addToCart = (id) => {
-  console.log('addtocart', id)
   if (cartItems[id]) {
     cartItems[id] += 1
   } else {
     cartItems[id] = 1
   }
 }
+
+const getProduct = async () => {
+  const response = await fetch('/products.json')
+  return await response.json()
+}
+
 export default (
   <BrowserRouter>
-    <Route exact={true} path="/" component={Main} />
+    <Route exact={true} path="/"
+           render={(props) => <Main {...props} getProduct={getProduct}/>}/>
     <Switch>
-      <Route exact path="/" component={Index} />
+      {/* <Route exact path="/"
+             render={(props) => <Index {...props} getProduct={getProduct} />} /> */}
       <Route path="/products/:id"
-             render={(props) => <Product {...props} products={PRODUCTS} addToCart={addToCart} />} />
+             render={(props) => {
+               console.log('route props', props)
+              if (props.location.state === undefined) {
+                return <Product {...props}
+                                addToCart={addToCart}
+                                getProduct={getProduct} />
+              } else {
+                return <Modal {...props}
+                              returnTo={ props.location.state.returnTo }
+                              addToCart={addToCart}
+                              getProduct={getProduct}/>
+              }
+             }} />
       <Route path="/cart"
-             render={(props) => <Cart {...props} products={PRODUCTS} cartItems={cartItems} />} />
-      {/* <Route path="/checkout" component={Checkout} cartItems={cartItems} products={PRODUCTS} /> */}
+             render={(props) => <Cart {...props} cartItems={cartItems} getProduct={getProduct} />} />
       <Route path="/checkout"
-             render={(props) => <Checkout {...props} products={PRODUCTS} cartItems={cartItems} />} />
+             render={(props) => <Checkout {...props} cartItems={cartItems} getProduct={getProduct} />} />
     </Switch>
   </BrowserRouter>
 )

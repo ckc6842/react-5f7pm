@@ -5,26 +5,38 @@ class Product extends Component {
 	constructor (props) {
     super(props)
     this.state = {
+      products: [],
+      selectedId: '',
     }
     this.handleBuy = this.handleBuy.bind(this)
   }
 
-  handleBuy (event) {
-    this.props.addToCart(this.props.match.params.id)
+  handleBuy () {
+    this.props.addToCart(this.state.selectedId)
   }
 
+  componentDidMount () {
+    var selectedId = this.props.match.params.id
+    this.setState({ selectedId })
+    this.props.getProduct().then((products) => {
+      this.setState({ products })
+    })
+  }
+  
 	render() {
-    console.log(this)
+    if (this.state.products && this.state.products.length === 0) return <></>
+
+    let { products, selectedId } = this.state
 		return (
       <div style={{ padding: '20px' }}>
-        <img src={this.props.products[this.props.match.params.id].src} style={{ height: '80%' }} />
+        <img src={ products[selectedId].src } style={{ height: '80%' }} />
         <p>
-          { this.props.products[this.props.match.params.id].title }
+          { products[selectedId].title }
         </p>
         <Link
           to={{
             pathname: `/cart`,
-            state: { productId: this.props.match.params.id}
+            state: { productId: selectedId}
           }}
           onClick={this.handleBuy}
           className="btn btn-primary">

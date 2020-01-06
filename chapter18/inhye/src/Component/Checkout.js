@@ -4,12 +4,20 @@ class Checkout extends Component {
 	constructor (props) {
     super(props)
     this.state = {
+      products: [],
     }
   }
 
-  componentDidMount() {}
+  componentDidMount () {
+    this.props.getProduct().then((products) => {
+      this.setState({ products })
+    })
+  }
 
 	render() {
+    if (this.state.products && this.state.products.length === 0) return <></>
+    let { cartItems } = this.props
+    let { products } = this.state
 		let count = 0
     return (
     <div style={{ padding: '20px' }}>
@@ -17,15 +25,15 @@ class Checkout extends Component {
       <table className="table table-bordered">
         <tbody>
         {
-          Object.keys(this.props.cartItems).map((item, index, list)=>{
-            count += this.props.cartItems[item]
+          Object.keys(cartItems).map((item, index, list) => {
+            count += cartItems[item]
             return <>
-              <tr key={item}>
+              <tr key={ item }>
                 <td>
-                  {this.props.products[item].title}
+                  { products[item].title }
                 </td>
                 <td>
-                  {this.props.cartItems[item]}
+                  { cartItems[item] }
                 </td>
               </tr>
             </>
@@ -35,7 +43,7 @@ class Checkout extends Component {
       </table>
       <p>
         <strong>
-          Total: {count}
+          Total: { count }
         </strong>
       </p>
     </div>

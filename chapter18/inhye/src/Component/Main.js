@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Modal from './Modal.js'
+import Index from './Index.js'
 const Heading = () => {
   return (
     <>
@@ -13,39 +13,40 @@ class Main extends Component {
 	constructor (props) {
     super(props)
     this.state = {
+      products: [],
+      isModal: false,
+      previousChildren: {},
+      location: {},
     }
   }
 
-  componentDidUpdate(nextProps) {
-    this.isModal = (nextProps.location.state && nextProps.location.state.modal)
-    if (this.isModal && nextProps.location.key !== this.props.location.key) {
-      this.previousChildren = this.props.children
-    }
+  componentDidUpdate(nextProps, prevState) {
+    // if (nextProps !== prevState) {}
+    // this.setState({
+    //   isModal: nextProps.location.state && nextProps.location.state.modal
+    // })
+    // // this.isModal = (nextProps.location.state && nextProps.location.state.modal)
+    // if (this.state.isModal && nextProps.location.key !== this.props.location.key) {
+    //   this.setState({
+    //     previousChildren: this.props.children
+    //   })
+    // }
   }
 
-  componentDidMount() {}
+  componentDidMount () {
+    this.setState({
+      location: this.props.location,
+    })
+    this.props.getProduct().then((products) => {
+      this.setState({ products })
+    })
+  }
 
 	render() {
 		return (
       <div className="main-layout" style={{ padding: '20px' }}>
-        <Heading/>
-        <div>
-          {
-            this.isModal
-            ? this.previousChildren
-            : this.props.children
-          }
-          {/* {this.props.children} */}
-          {
-            this.isModal
-            ? (
-              <Modal isOpen={true} returnTo={this.props.location.state.returnTo}>
-                {this.props.children}
-              </Modal>
-            )
-            : ''
-          }
-        </div>
+        <Heading />
+        <Index {...this.state} />
       </div>
 		)
 	}
