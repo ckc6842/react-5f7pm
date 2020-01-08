@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-import { Button } from '../../'
+import { LinkButton } from '../../'
 import connectBookList from '../../../store/containers/bookList'
 import ProductDetailPage from '../ProductDetail/ProductDetailPage'
 import ProductDetailModal from '../ProductDetail/ProductDetailModal'
-import { Link } from 'react-router-dom'
 
 class BookListPage extends Component {
   constructor (props) {
@@ -31,6 +30,9 @@ class BookListPage extends Component {
   render () {
     const { selectedBookId, isModalOpened, isDetailPage } = this.state
     const { bookList, location } = this.props
+
+    // TODO: 구조 개선 - BookList에서 경로를 핸들링하지 말고 
+    // ProductDetail에서 모달로 보여줄지 페이지로 보여줄지 정하는게 좋을 듯 합니다.
     const { state = {} } = location
     const { isModal } = state
     if (!isModal && isDetailPage) {
@@ -42,7 +44,7 @@ class BookListPage extends Component {
         <section>
           <p>팝업에서 자세한 내용을 확인하려면 책을 클릭하세요. 팝업의 링크를 복사하거나 붙여넣을 수 있습니다.</p>
           <p>링크는 책에 대한 별도의 페이지로 연결됩니다.</p>
-          <Button>카트</Button>
+          <LinkButton to="/cart" theme="contained">카트</LinkButton>
         </section>
         <BookList>
           {
@@ -88,16 +90,12 @@ const BookList = styled.section`
   flex-wrap: wrap;
 `
 
-// NOTE: 이렇게 상속받는게 맞는 방법일까요..?
-// styled-components 복습이 좀 필요할 것 같습니다.
-const BookButton = Button.withComponent(
-  styled.button`
-    margin: 0;
-    border: none;
-    background: none;
-    padding-left: 0 !important;
-  `.withComponent(Link)
-)
+const BookButton = styled(LinkButton)`
+  margin: 0;
+  border: none;
+  background: none;
+  padding-left: 0 !important;
+`
 
 const BookImg = styled.img`
   height: 200px;
