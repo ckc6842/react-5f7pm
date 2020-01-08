@@ -1,59 +1,38 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
+
+import connectCart from '../../../store/containers/cart'
 
 import { LinkButton } from '../../'
 
-import connectBookList from '../../../store/containers/bookList'
-import connectCart from '../../../store/containers/cart'
-
 const propTypes = {
-  bookId: PropTypes.number.isRequired,
-  // goBack: PropTypes.func.isRequired,
+  book: PropTypes.object.isRequired,
 }
 
 class ProductDetail extends Component {
   constructor (props) {
     super(props)
-    const { bookList, bookId } = props
-    this.state = {
-      selectedBook: bookList.find((book) => book.id === bookId),
-    }
     this.addCartItem = this.addCartItem.bind(this)
   }
-  render () {
-    const { selectedBook } = this.state
-    if (!selectedBook) {
-      return this.renderItemNotFound()
-    }
-    return (
-      <>
-        <DetailHeader>{ selectedBook.name }</DetailHeader>
-        <DetailBody>
-          <article>
-            <BookImg src={ selectedBook.bookImg } alt={ selectedBook.name } />
-          </article>
-          <article style={{ wordBreak: 'break-all', marginLeft: '16px' }}>
-            아무튼 책에 대한 뭔가 자세한 설명 <br/>
-            { JSON.stringify(selectedBook) }
-          </article>
-        </DetailBody>
-        { this.renderFooterButtons() }
-      </>
-    )
-  }
 
-  renderItemNotFound () {
-    return (
-      <>
-        <DetailHeader>Book Detail</DetailHeader>
-        <DetailBody>
-          존재하지 않는 책 입니다.
-        </DetailBody>
-        { this.renderFooterButtons() }
-      </>
-    )
+  render () {
+    const { book } = this.props
+    // TODO: 다른 컴포넌트들도 이런식으로 템플릿 만들어서
+    // 공용 템플릿으로 추출할 수 있을 것 같습니다.
+    return <>
+      <DetailHeader>{ book.name }</DetailHeader>
+      <DetailBody>
+        <article>
+          <BookImg src={ book.bookImg } alt={ book.name } />
+        </article>
+        <article style={{ wordBreak: 'break-all', marginLeft: '16px' }}>
+          아무튼 책에 대한 뭔가 자세한 설명 <br/>
+          { JSON.stringify(book) }
+        </article>
+      </DetailBody>
+      { this.renderFooterButtons() }
+    </>
   }
 
   renderFooterButtons () {
@@ -67,24 +46,22 @@ class ProductDetail extends Component {
       </LinkButton>
     </DetailFooter>
   }
+
   addCartItem () {
-    // TODO: 현재는 book의 id를 사용하고 있으나 별도의 cartItem id를 부여하는 것이 좋음
-    const book = JSON.parse(JSON.stringify(this.state.selectedBook))
+    // TODO: 현재는 편의상 book의 id를 사용하고 있으나
+    // 별도의 cartItem id를 부여하는 것이 좋음
+    const { book, addCartItem } = this.props
     const cartItem = {
       id: book.id,
-      book,
+      book: book,
     }
-    this.props.addCartItem(cartItem)
+    addCartItem(cartItem)
   }
 }
 
 ProductDetail.propTypes = propTypes
 
-export default withRouter(
-  connectCart(
-    connectBookList(ProductDetail)
-  )
-)
+export default connectCart(ProductDetail)
 
 const DetailHeader = styled.h1`
   font-size: 20pt;
