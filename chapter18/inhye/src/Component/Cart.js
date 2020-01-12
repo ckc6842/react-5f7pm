@@ -18,19 +18,19 @@ class Cart extends Component {
 	render() {
     if (this.state.products && this.state.products.length === 0) return <></>
     let { products } = this.state
-    let { cartItems } = this.props
+    let { cart } = this.props
 		return (
       <div style={{ padding: '20px' }}>
         {
-          Object.keys(cartItems).length === 0
+          Object.keys(cart).length === 0
           ? <p>Your cart is empty</p>
           : ''
         }
         <ul>
           {
-            Object.keys(cartItems).map((item, index, list) => {
+            Object.keys(cart).map((item, index, list) => {
               return <li key={item}>
-                { products[item].title } - { cartItems[item] }
+                { products[item].title } - { cart[item] }
               </li>
             })
           }
