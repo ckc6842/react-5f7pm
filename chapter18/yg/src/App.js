@@ -1,12 +1,17 @@
 import React from 'react'
 import Router from './Router'
 import { Provider } from 'react-redux'
-import store from './store'
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor } from './store'
 
-function App() {
+// FIXME: 분명 redux-persist 적용했는데도
+// 새로고침하면 스토어가 날아가는 문제가 있음.
+const App = () => {
   return (
     <Provider store={ store }>
-      <Router />
+      <PersistGate loading={ null } persistor={ persistor }>
+        <Router />
+      </PersistGate>
     </Provider>
   )
 }

@@ -48,25 +48,23 @@ const routes = [
 
 class Router extends Component {
   render () {
-    return (
-      <HashRouter>
-        <Switch>
-          {
-            routes.map(({ path, exact, component: Component, props }, index) =>
-              <Route key={ index }
-                     exact={ exact }
-                     path={ path }
-                     render={ (parentProps) =>
-                       <Component {...parentProps} {...props} /> }
-              />
-            )
-          }
-          <Redirect to="/" />
-        </Switch>
-      </HashRouter>
-    )
+    return <HashRouter>
+      <Switch>
+        {
+          routes.map(({ path, exact, component: Component, props }, index) =>
+            <Route key={ index }
+                    exact={ exact }
+                    path={ path }
+                    render={ (parentProps) =>
+                      <Component {...parentProps} {...props} />
+                    }
+            />
+          )
+        }
+        <Redirect to="/" />
+      </Switch>
+    </HashRouter>
   }
-  renderRoute
 }
 
 export default Router

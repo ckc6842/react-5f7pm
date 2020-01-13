@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import connectCart from '../store/containers/cart'
 
 class Product extends Component {
 	constructor (props) {
@@ -12,7 +13,7 @@ class Product extends Component {
   }
 
   handleBuy () {
-    this.props.addToCart(this.state.selectedId)
+    this.props.addCart(this.state.selectedId)
   }
 
   componentDidMount () {
@@ -47,4 +48,4 @@ class Product extends Component {
 	}
 }
 
-export default Product
+export default connectCart(Product)
