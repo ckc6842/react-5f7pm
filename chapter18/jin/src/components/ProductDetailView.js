@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+
 class ProductDetailView extends React.Component {
   
   constructor(props) {
@@ -10,15 +11,17 @@ class ProductDetailView extends React.Component {
 
   handleBuy(event) {
     const productId = this.props.match.params.id
-    this.props.addToCart(productId)
+    let product = this.props.getBook(productId)
+    this.props.createCartItem(product)
   }
 
   render() {
     const productId = this.props.match.params.id
+    const product = this.props.getBook(productId)
     return <div>
-      <img src={this.props.products[productId].src}
+      <img src={product.thumbUrl}
         style={{ height: '80%' }} alt=''/>
-      <p>{this.props.products[productId].title}</p>
+      <p>{product.title}</p>
       <Link 
         to={{ pathname: `/cart`, state: {productId: productId}}}
         onClick={this.handleBuy} className='btn btn-primary'>

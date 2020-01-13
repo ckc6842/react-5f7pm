@@ -20,6 +20,16 @@ export const getBookList = createSelector(
   }
 )
 
+export const getBook = createSelector(
+  [getBooks],
+  books => (
+    books.filter(product => {
+      // 여기서 URL 에 있는 파라미터를 어떻게 넘겨받지?
+      // product.id === 
+    })
+  )
+)
+
 export const getCartList = createSelector(
   [getCart],
   cart => (
