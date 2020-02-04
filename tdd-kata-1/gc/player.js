@@ -2,8 +2,7 @@ const points = [
   0,
   15,
   30,
-  40,
-  'WIN'
+  40
 ]
 
 class Player {
@@ -21,11 +20,9 @@ class Player {
   }
 
   addPoint() {
-    if (this.pointCount < points.length - 1) {
-      this.pointCount += 1
-    } else {
-      throw (new Error('Point Exceed'))
-    }
+    if (this.pointCount >= points.length - 1) return 
+
+    this.pointCount += 1
   }
 }
 
