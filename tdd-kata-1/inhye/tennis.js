@@ -7,12 +7,13 @@ class Tennis {
 //    = 어드벤티지를 획득한 플레이어의 반대 플레이어가 점수를 따면 듀스 상태로 돌아간다.
   constructor () {
     this.player = new Player()
+    this.isDuce = false
   }
   takeField (playerName, currentScore) {
     this.player.addPoint(playerName, currentScore)
   }
-  getPlayerScore (playerName) {
-    return this.player.getPlayerScore(playerName)
+  updateDuceStatus (isDuce) {
+    this.isDuce = isDuce
   }
 }
 
@@ -42,10 +43,31 @@ class Player {
     const player = this.findPlayer(playerName)
     return player.score
   }
+  findPlayerByComparePoint (playerA, playerB) {
+    const playerAScore = this.getPlayerScore(playerA)
+    const playerBScore = this.getPlayerScore(playerB)
+    if (playerAScore > playerBScore) {
+      return playerA
+    } else if (playerAScore < playerBScore) {
+      return playerB
+    }
+  }
+  checkDuce (playerA, playerB) {
+    const playerAScore = this.getPlayerScore(playerA)
+    const playerBScore = this.getPlayerScore(playerB)
+    return playerAScore === 40 && playerBScore === 40
+  }
   addPoint (playerName, currentScore) {
     for (let i = 0; i < this.playerList.length; i ++) {
       if (this.playerList[i].name === playerName) {
         this.playerList[i].score += currentScore
+      }
+    }
+  }
+  addAdvatage (playerName) {
+    for (let i = 0; i < this.playerList.length; i ++) {
+      if (this.playerList[i].name === playerName) {
+        this.playerList[i].hasAdvantage = true
       }
     }
   }
