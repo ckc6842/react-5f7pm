@@ -84,6 +84,13 @@ describe('TennisGame', () => {
 describe('TennisPlayer', () => {
   const PLAYER_NAME = 'Test Player'
   let player
+
+  const takeManyPoints = (count) => {
+    for (let i = 0; i < count; i++) {
+      player.takePoint()
+    }
+  }
+
   beforeEach(() => {
     player = new TennisPlayer(PLAYER_NAME)
   })
@@ -92,29 +99,27 @@ describe('TennisPlayer', () => {
     expect(player).not.toBe(undefined)
   })
 
-  test('Test - is Player name Setted', () => {
-    expect(player.getName()).toBe(PLAYER_NAME)
-  })
-
   test('Test - Love', () => {
     expect(player.getPoint()).toBe(0)
   })
 
   test('Test - Fifteen', () => {
-    player.takePoint()
+    takeManyPoints(1)
     expect(player.getPoint()).toBe(15)
   })
 
   test('Test - Thirty', () => {
-    player.takePoint()
-    player.takePoint()
+    takeManyPoints(2)
     expect(player.getPoint()).toBe(30)
   })
 
   test('Test - Fourty', () => {
-    player.takePoint()
-    player.takePoint()
-    player.takePoint()
+    takeManyPoints(3)
+    expect(player.getPoint()).toBe(40)
+  })
+
+  test('Test - Already Max Score - Fourty', () => {
+    takeManyPoints(4)
     expect(player.getPoint()).toBe(40)
   })
 })
