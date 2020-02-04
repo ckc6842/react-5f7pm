@@ -9,7 +9,12 @@
 //    = 어드벤티지를 획득한 플레이어가 점수를 따면 게임에서 승리한다.
 //    = 어드벤티지를 획득한 플레이어의 반대 플레이어가 점수를 따면 듀스 상태로 돌아간다.
 
-const POINT = [0, 15, 30, 40]
+const POINT = {
+  LOVE: 0,
+  FIFTEEN: 15,
+  THIRTY: 30,
+  FOURTY: 40,
+}
 
 class TennisGame {
   constructor () {
@@ -17,10 +22,49 @@ class TennisGame {
       0: new TennisPlayer('Player A'),
       1: new TennisPlayer('Player B'),
     }
+    this.adventagePlayer = undefined
+    this.winner = undefined
   }
 
-  addPoint (player) {
-    this.players[player].takePoint()
+  givePoint (playerId) {
+    if (this.winner) {
+      throw new Error('Game already over')
+    }
+    const player = this.players[playerId]
+    if (this.hasAdventage(player)) {
+      this.declareWinner(player)
+      return
+    }
+
+    if (this.checkDuce()) {
+      this.adventagePlayer = this.adventagePlayer ? undefined : player
+      return
+    }
+
+    if (player.getPoint() === POINT.FOURTY) {
+      this.declareWinner(player)
+      return
+    }
+
+    player.takePoint()
+  }
+  
+  checkDuce () {
+    return Object.values(this.players)
+                 .every(player => player.getPoint() === POINT.FOURTY)
+  }
+
+  declareWinner (player) {
+    console.log(`Winner is ${player.getName()}`)
+    this.winner = player
+  }
+
+  getWinner () {
+    return this.winner
+  }
+
+  hasAdventage (player) {
+    return this.adventagePlayer === player
   }
 
   getPlayer (player) {
@@ -34,7 +78,7 @@ class TennisPlayer {
     this.winCount = 0
   }
   takePoint () {
-    if (this.winCount < POINT.length - 1) {
+    if (this.getPoint() !== POINT.FOURTY) {
       this.winCount++
     }
   }
@@ -42,7 +86,13 @@ class TennisPlayer {
     return this.name
   }
   getPoint () {
-    return POINT[this.winCount]
+    const WIN_COUNT_POINT = {
+      0: POINT.LOVE,
+      1: POINT.FIFTEEN,
+      2: POINT.THIRTY,
+      3: POINT.FOURTY,
+    }
+    return WIN_COUNT_POINT[this.winCount]
   }
 }
 

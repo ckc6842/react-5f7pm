@@ -15,6 +15,18 @@ describe('TennisGame', () => {
   let game
   const PLAYER_A = 0
   const PLAYER_B = 1
+
+  const giveManyPoints = (player, count = 1) => {
+    for (let i = 0; i < count; i++) {
+      game.givePoint(player)
+    }
+  }
+
+  const makeDuce = () => {
+    giveManyPoints(PLAYER_A, 3)
+    giveManyPoints(PLAYER_B, 3)
+  }
+
   beforeEach(() => {
     game = new TennisGame()
   })
@@ -23,9 +35,49 @@ describe('TennisGame', () => {
     expect(game).not.toBe(undefined)
   })
 
-  test('Test - addPoint to Player', () => {
-    game.addPoint(PLAYER_A)
+  test('Test - givePoint to Player A', () => {
+    game.givePoint(PLAYER_A)
     expect(game.getPlayer(PLAYER_A).getPoint()).toBe(15)
+  })
+
+  test('Test - checkDuce', () => {
+    makeDuce()
+    expect(game.checkDuce()).toBe(true)
+  })
+
+  test('Test - Player A get Adventage', () => {
+    makeDuce()
+    game.givePoint(PLAYER_A)
+    expect(game.hasAdventage(game.getPlayer(PLAYER_A))).toBe(true)
+  })
+
+  test('Test - Player A Win on Perfect Game', () => {
+    giveManyPoints(PLAYER_A, 4)
+    expect(game.getWinner()).toBe(game.getPlayer(PLAYER_A))
+  })
+
+  test('Test - Player A Win on Duce', () => {
+    makeDuce()
+    giveManyPoints(PLAYER_A, 2)
+    expect(game.getWinner()).toBe(game.getPlayer(PLAYER_A))
+  })
+
+  test('Test - Player B seize Adventage from Player A', () => {
+    makeDuce()
+    game.givePoint(PLAYER_A)
+    giveManyPoints(PLAYER_B, 2)
+    expect(game.hasAdventage(game.getPlayer(PLAYER_B))).toBe(true)
+  })
+
+  test('Test - Player B reverse Victory', () => {
+    makeDuce()
+    game.givePoint(PLAYER_A)
+    giveManyPoints(PLAYER_B, 3)
+    expect(game.getWinner()).toBe(game.getPlayer(PLAYER_B))
+  })
+
+  test('Test - Game already Over', () => {
+    expect(() => giveManyPoints(PLAYER_A, 5)).toThrow()
   })
 })
 
