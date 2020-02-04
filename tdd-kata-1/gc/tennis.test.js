@@ -26,7 +26,7 @@ describe('Test Player', () => {
     player.addPoint()
     player.addPoint()
     player.addPoint()
-    expect(() => player.addPoint()).toThrow()
+    expect(player.getPoint()).toBe(40)
   })
 })
 
@@ -50,8 +50,16 @@ describe('Test Tennis Game', () => {
     expect(tennis.getPointBoard()).toBe('15 0')
   })
 
-  it('Test win game', () => {
-    expect(tennis.getGameWinner()).toBe(null)
+  it('Test multiple win point', () => {
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    expect(tennis.getPointBoard()).toBe('40 15')
+  })
+
+  it('Test win game without duece', () => {
+    expect(tennis.getGameWinner()).toBe('0 0')
     tennis.winPoint(playerA)
     tennis.winPoint(playerA)
     tennis.winPoint(playerA)
@@ -66,6 +74,43 @@ describe('Test Tennis Game', () => {
     tennis.winPoint(playerA)
     tennis.winPoint(playerB)
     tennis.winPoint(playerB)
-    expect(tennis.getGameWinner()).toBe('DUECE')
+    expect(tennis.getGameWinner()).toBe('40 40')
+  })
+
+  it('Test start advantage', () => {
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    expect(tennis.getGameWinner()).toBe('ADV A')
+  })
+
+  it('Test return duece after advantage', () => {
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    expect(tennis.getGameWinner()).toBe('40 40')
+  })
+
+  it('Test win game with duece', () => {
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerA)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerB)
+    tennis.winPoint(playerB)
+    expect(tennis.getGameWinner()).toBe('B')
   })
 })
