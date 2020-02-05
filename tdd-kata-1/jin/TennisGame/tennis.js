@@ -21,8 +21,8 @@ class TennisGame {
       return
     }
 
-    // 스코어를 더한 점수가 게임 매치 포인트라면 듀스 상태인지 확인
     let addedPoint = player.addPoint()
+    // 스코어를 더한 점수가 게임 매치 포인트라면 듀스 상태인지 확인
     if (addedPoint === TENNIS_POINTS.MATCH) {
       this.updateGameStatus()
     }
