@@ -1,8 +1,17 @@
 const TENNIS_POINTS = {
-  POINT_LOVE: 0,
-  POINT_FIFTEEN: 15,
-  POINT_THIRTY: 30,
-  POINT_FORTY: 40
+  LOVE: 0,
+  FIFTEEN: 15,
+  THIRTY: 30,
+  FORTY: 40,  
+  MATCH: 40,
+  WIN: 100
 }
 
-module.exports = TENNIS_POINTS
+const GAME_STATUS = {
+  READY: 0,
+  START: 1,
+  DEUCE: 2,
+  END: 10
+}
+
+module.exports = { TENNIS_POINTS, GAME_STATUS }
